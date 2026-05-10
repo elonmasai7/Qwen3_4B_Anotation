@@ -1,0 +1,57 @@
+platform:
+  name: "Annotation Platform"
+  version: "1.0.0"
+  environment: "development"
+
+database:
+  host: "localhost"
+  port: 5432
+  name: "annotation_db"
+  pool_size: 20
+  max_overflow: 10
+
+redis:
+  host: "localhost"
+  port: 6379
+  db: 0
+
+kafka:
+  bootstrap_servers: "localhost:9092"
+  consumer_group: "annotation-platform"
+
+minio:
+  endpoint: "localhost:9000"
+  access_key: "minioadmin"
+  secret_key: "minioadmin"
+  bucket: "annotation-data"
+
+model:
+  name: "Qwen/Qwen3-4B"
+  max_tokens: 8192
+  temperature: 0.1
+  top_p: 0.95
+
+vllm:
+  tensor_parallel_size: 1
+  gpu_memory_utilization: 0.85
+  max_num_seqs: 256
+  enforce_eager: false
+
+annotation:
+  num_branches: 3
+  confidence_threshold: 0.8
+  max_retries: 3
+
+retrieval:
+  top_k: 5
+  embedding_model: "BAAI/bge-small-en-v1.5"
+  similarity_threshold: 0.7
+
+logging:
+  level: "INFO"
+  format: "json"
+  output: "stdout"
+
+monitoring:
+  enabled: true
+  metrics_port: 9090
