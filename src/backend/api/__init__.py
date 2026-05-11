@@ -1,8 +1,8 @@
-from fastapi import FastAPI, HTTPException, UploadFile, File, BackgroundTasks
+from fastapi import FastAPI, UploadFile, File, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import Any
-from datetime import datetime
+from datetime import datetime, timezone
 import uuid
 
 app = FastAPI(
@@ -57,10 +57,10 @@ async def root():
 
 @app.get("/health")
 async def health():
-    return {"status": "healthy", "timestamp": datetime.utcnow().isoformat()}
+    return {"status": "healthy", "timestamp": datetime.now(timezone.utc).isoformat()}
 
 
-@app.post("/api/v1/annotate", response_model=AnnotationResponse)
+@app.post("/annotate", response_model=AnnotationResponse)
 async def annotate(request: AnnotationRequest):
     annotation_id = str(uuid.uuid4())
 
@@ -72,7 +72,7 @@ async def annotate(request: AnnotationRequest):
     )
 
 
-@app.post("/api/v1/datasets/upload", response_model=DatasetUploadResponse)
+@app.post("/datasets/upload", response_model=DatasetUploadResponse)
 async def upload_dataset(
     file: UploadFile = File(...),
     background_tasks: BackgroundTasks = None,
@@ -86,17 +86,17 @@ async def upload_dataset(
     )
 
 
-@app.get("/api/v1/datasets")
+@app.get("/datasets")
 async def list_datasets():
     return {"datasets": []}
 
 
-@app.get("/api/v1/datasets/{dataset_id}")
+@app.get("/datasets/{dataset_id}")
 async def get_dataset(dataset_id: str):
     return {"dataset_id": dataset_id, "name": "sample", "status": "ready"}
 
 
-@app.post("/api/v1/experiments", response_model=dict)
+@app.post("/experiments", response_model=dict)
 async def create_experiment(request: ExperimentCreateRequest):
     experiment_id = str(uuid.uuid4())
 
@@ -104,16 +104,16 @@ async def create_experiment(request: ExperimentCreateRequest):
         "experiment_id": experiment_id,
         "name": request.name,
         "status": "created",
-        "created_at": datetime.utcnow().isoformat(),
+        "created_at": datetime.now(timezone.utc).isoformat(),
     }
 
 
-@app.get("/api/v1/experiments")
+@app.get("/experiments")
 async def list_experiments():
     return {"experiments": []}
 
 
-@app.get("/api/v1/experiments/{experiment_id}")
+@app.get("/experiments/{experiment_id}")
 async def get_experiment(experiment_id: str):
     return {
         "experiment_id": experiment_id,
@@ -127,7 +127,7 @@ async def get_experiment(experiment_id: str):
     }
 
 
-@app.get("/api/v1/leaderboard")
+@app.get("/leaderboard")
 async def get_leaderboard():
     return {
         "rankings": [
@@ -137,22 +137,22 @@ async def get_leaderboard():
     }
 
 
-@app.post("/api/v1/leaderboard/submit")
+@app.post("/leaderboard/submit")
 async def submit_leaderboard(experiment_id: str):
     return {
         "submission_id": str(uuid.uuid4()),
         "experiment_id": experiment_id,
         "status": "submitted",
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
     }
 
 
-@app.get("/api/v1/prompts")
+@app.get("/prompts")
 async def list_prompts():
     return {"prompts": []}
 
 
-@app.post("/api/v1/prompts")
+@app.post("/prompts")
 async def create_prompt(prompt: dict[str, Any]):
     prompt_id = str(uuid.uuid4())
     return {"prompt_id": prompt_id, **prompt}

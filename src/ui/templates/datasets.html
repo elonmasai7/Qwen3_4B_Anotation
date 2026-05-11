@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-header">
+    <h1>Datasets</h1>
+    <p class="subtitle">Upload and manage your datasets</p>
+</section>
+
+<section class="card" aria-labelledby="upload-heading">
+    <h2 id="upload-heading">Upload Dataset</h2>
+    <form class="form" id="upload-form" aria-label="Dataset upload form">
+        <div class="form-group">
+            <label for="file-upload">File</label>
+            <input type="file" id="file-upload" name="file" class="form-input form-file" required accept=".json,.jsonl,.csv,.tsv,.parquet,.xml,.yaml,.yml">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" id="upload-btn">
+                <span class="btn-text">Upload</span>
+                <span class="btn-spinner" aria-hidden="true"></span>
+            </button>
+        </div>
+    </form>
+    <output id="upload-status" aria-live="polite"></output>
+</section>
+
+<section class="card" aria-labelledby="datasets-heading">
+    <h2 id="datasets-heading">All Datasets</h2>
+    <div class="table-wrapper">
+        <table class="table" id="datasets-table" aria-label="Datasets list">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="4" class="empty-state">No datasets found. Upload one above.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

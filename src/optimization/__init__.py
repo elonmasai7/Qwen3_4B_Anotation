@@ -1,4 +1,4 @@
-from typing import Any, AsyncIterator
+from typing import Any
 import asyncio
 from dataclasses import dataclass
 from common.config import get_settings
@@ -30,7 +30,7 @@ class VLLMEngine:
         logger.info("initializing_vllm", model=settings.model.name)
 
         try:
-            from vllm import LLM, SamplingParams
+            from vllm import LLM
             self.llm = LLM(
                 model=settings.model.name,
                 tensor_parallel_size=settings.vllm.tensor_parallel_size,
@@ -222,7 +222,13 @@ class AsyncBatcher:
             self.pending = self.pending[self.max_batch_size :]
 
             prompts = [p for _, p in batch]
-            results = await self.engine.generate(prompts)
+            engine = getattr(self, "engine", None)
+            if engine is None:
+                for future, _ in batch:
+                    if not future.done():
+                        future.set_result("No engine configured")
+                continue
+            results = await engine.generate(prompts)
 
             for (future, _), result in zip(batch, results):
                 if not future.done():

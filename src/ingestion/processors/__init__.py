@@ -1,4 +1,3 @@
-from typing import AsyncIterator
 import re
 from dataclasses import dataclass
 

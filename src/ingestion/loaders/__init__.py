@@ -6,9 +6,9 @@ import csv
 import xml.etree.ElementTree as ET
 import pyarrow.parquet as pq
 import yaml
-from datetime import datetime
+from datetime import datetime, timezone
 import uuid
-from common.types import DataRow, DataFormat, Metadata
+from common.types import DataRow, Metadata
 from common.logging import get_logger
 
 logger = get_logger(__name__)
@@ -59,7 +59,7 @@ class JSONLoader(DataLoader):
             content=item.get("content", item.get("text", item.get("data", str(item)))),
             metadata=Metadata(
                 source=str(self.file_path),
-                created_at=datetime.utcnow(),
+                created_at=datetime.now(timezone.utc),
             ),
             raw_data=item,
         )
@@ -93,7 +93,7 @@ class JSONLLoader(DataLoader):
             content=item.get("content", item.get("text", str(item))),
             metadata=Metadata(
                 source=str(self.file_path),
-                created_at=datetime.utcnow(),
+                created_at=datetime.now(timezone.utc),
             ),
             raw_data=item,
         )
@@ -124,7 +124,7 @@ class CSVLoader(DataLoader):
                     content=row.get(self.text_column, ""),
                     metadata=Metadata(
                         source=str(self.file_path),
-                        created_at=datetime.utcnow(),
+                        created_at=datetime.now(timezone.utc),
                     ),
                     raw_data=row,
                 )
@@ -149,7 +149,7 @@ class TSVLoader(CSVLoader):
                     content=row.get(self.text_column, ""),
                     metadata=Metadata(
                         source=str(self.file_path),
-                        created_at=datetime.utcnow(),
+                        created_at=datetime.now(timezone.utc),
                     ),
                     raw_data=row,
                 )
@@ -165,7 +165,7 @@ class ParquetLoader(DataLoader):
                 content=str(row.get("content", row.get("text", str(row)))),
                 metadata=Metadata(
                     source=str(self.file_path),
-                    created_at=datetime.utcnow(),
+                    created_at=datetime.now(timezone.utc),
                 ),
                 raw_data=row.to_dict(),
             )
@@ -190,7 +190,7 @@ class XMLLoader(DataLoader):
                 content=content,
                 metadata=Metadata(
                     source=str(self.file_path),
-                    created_at=datetime.utcnow(),
+                    created_at=datetime.now(timezone.utc),
                 ),
                 raw_data=self._elem_to_dict(elem),
             )
@@ -234,7 +234,7 @@ class YAMLLoader(DataLoader):
             content=item.get("content", item.get("text", str(item))),
             metadata=Metadata(
                 source=str(self.file_path),
-                created_at=datetime.utcnow(),
+                created_at=datetime.now(timezone.utc),
             ),
             raw_data=item,
         )

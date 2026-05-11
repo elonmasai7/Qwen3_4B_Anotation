@@ -1,4 +1,3 @@
-from typing import Any
 import io
 from minio import Minio
 from datetime import timedelta

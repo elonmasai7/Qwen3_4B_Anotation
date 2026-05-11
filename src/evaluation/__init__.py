@@ -2,8 +2,7 @@ from typing import Any
 import time
 from collections import defaultdict
 from common.types import (
-    AnnotationResult, EvaluationMetrics, DataRow,
-    AnnotationLabel, ExperimentConfig,
+    AnnotationResult, EvaluationMetrics, ExperimentConfig,
 )
 from common.logging import get_logger
 
@@ -37,16 +36,18 @@ class MetricsCalculator:
             return 0.0
 
         true_positives = 0
-        predicted_positives = 0
+        false_positives = 0
 
         for pred, gt in zip(predictions, ground_truths):
             if pred.labels:
                 pred_label = str(pred.labels[0].value)
-                predicted_positives += 1
                 if pred_label == str(gt):
                     true_positives += 1
+                else:
+                    false_positives += 1
 
-        return true_positives / predicted_positives if predicted_positives > 0 else 0.0
+        denom = true_positives + false_positives
+        return true_positives / denom if denom > 0 else 0.0
 
     @staticmethod
     def calculate_recall(
@@ -57,15 +58,18 @@ class MetricsCalculator:
             return 0.0
 
         true_positives = 0
-        actual_positives = 0
+        false_negatives = 0
 
         for pred, gt in zip(predictions, ground_truths):
-            if str(gt):
-                actual_positives += 1
-                if pred.labels and str(pred.labels[0].value) == str(gt):
+            gt_val = str(gt)
+            if gt_val:
+                if pred.labels and str(pred.labels[0].value) == gt_val:
                     true_positives += 1
+                else:
+                    false_negatives += 1
 
-        return true_positives / actual_positives if actual_positives > 0 else 0.0
+        denom = true_positives + false_negatives
+        return true_positives / denom if denom > 0 else 0.0
 
     @staticmethod
     def calculate_f1(

@@ -1,4 +1,4 @@
-from typing import Any, AsyncIterator
+from typing import Any
 from dataclasses import dataclass
 from common.logging import get_logger
 

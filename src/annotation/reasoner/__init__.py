@@ -1,10 +1,10 @@
 from typing import Any
 import asyncio
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from common.types import (
     AnnotationLabel, AnnotationResult, AnnotationStatus,
-    DataRow, PromptTemplate,
+    DataRow,
 )
 from common.config import get_settings
 from common.logging import get_logger
@@ -23,8 +23,8 @@ class AnnotationReasoner:
         prompt: str,
         max_retries: int | None = None,
     ) -> AnnotationResult:
-        retries = max_retries or settings.annotation.max_retries
-        start_time = datetime.utcnow()
+        retries = max_retries if max_retries is not None else settings.annotation.max_retries
+        start_time = datetime.now(timezone.utc)
 
         for attempt in range(retries):
             try:
@@ -34,7 +34,7 @@ class AnnotationReasoner:
                 label = self._create_label(parsed)
                 status = AnnotationStatus.COMPLETED
 
-                processing_time = (datetime.utcnow() - start_time).total_seconds() * 1000
+                processing_time = (datetime.now(timezone.utc) - start_time).total_seconds() * 1000
 
                 return AnnotationResult(
                     data_id=data.id,

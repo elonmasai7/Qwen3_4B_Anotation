@@ -1,4 +1,5 @@
 import logging
+import logging.config
 import sys
 from typing import Any
 import structlog
@@ -16,6 +17,9 @@ def setup_logging() -> None:
                 "()": "pythonjsonlogger.jsonlogger.JsonFormatter",
                 "format": "%(asctime)s %(name)s %(levelname)s %(message)s",
             },
+            "standard": {
+                "format": "%(asctime)s %(name)s %(levelname)s %(message)s",
+            },
         },
         "handlers": {
             "console": {
@@ -30,7 +34,7 @@ def setup_logging() -> None:
         },
     }
 
-    logging.basicConfig(**logging_config)
+    logging.config.dictConfig(logging_config)
 
     structlog.configure(
         processors=[

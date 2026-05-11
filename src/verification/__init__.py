@@ -1,7 +1,7 @@
 from typing import Any
 import re
 from common.types import (
-    AnnotationResult, AnnotationLabel, VerificationResult,
+    AnnotationResult, AnnotationLabel, AnnotationStatus, VerificationResult,
     DataRow,
 )
 from common.logging import get_logger
@@ -70,7 +70,7 @@ class ConsistencyChecker:
         if len(labels) < 2:
             return conflicts
 
-        label_values = [str(l.value) for l in labels]
+        label_values = [str(label.value) for label in labels]
         if len(set(label_values)) > 1:
             conflicts.append({
                 "type": "label_conflict",
@@ -200,7 +200,7 @@ class RepairEngine:
         if not consistency.is_valid:
             annotation = self._repair_consistency(annotation, consistency.issues)
 
-        annotation.status = "verified"
+        annotation.status = AnnotationStatus.VERIFIED
         return annotation
 
     def _repair_issues(

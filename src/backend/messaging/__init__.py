@@ -1,4 +1,3 @@
-import asyncio
 from typing import Any, Callable
 import json
 from aiokafka import AIOKafkaProducer, AIOKafkaConsumer

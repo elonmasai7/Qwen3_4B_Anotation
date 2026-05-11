@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-header">
+    <h1>Prompts</h1>
+    <p class="subtitle">Create and manage annotation prompt templates</p>
+</section>
+
+<section class="card" aria-labelledby="create-prompt-heading">
+    <h2 id="create-prompt-heading">New Prompt</h2>
+    <form class="form" id="prompt-form" aria-label="Create prompt form">
+        <div class="form-group">
+            <label for="prompt-name">Prompt Name</label>
+            <input type="text" id="prompt-name" name="name" class="form-input" required placeholder="e.g. sentiment-classifier" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label for="prompt-content">Template</label>
+            <textarea id="prompt-content" name="content" class="form-input form-textarea" required rows="8" placeholder="Enter your prompt template. Use {variable} for placeholders."></textarea>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" id="create-prompt-btn">
+                <span class="btn-text">Create Prompt</span>
+                <span class="btn-spinner" aria-hidden="true"></span>
+            </button>
+        </div>
+    </form>
+</section>
+
+<section class="card" aria-labelledby="prompts-heading">
+    <h2 id="prompts-heading">All Prompts</h2>
+    <div class="table-wrapper">
+        <table class="table" id="prompts-table" aria-label="Prompts list">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Content</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="4" class="empty-state">No prompts yet. Create one above.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

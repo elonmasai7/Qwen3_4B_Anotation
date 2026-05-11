@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-header">
+    <h1>Dashboard</h1>
+    <p class="subtitle">Platform overview and recent activity</p>
+</section>
+
+<section class="stats-grid" aria-label="Platform statistics">
+    <article class="stat-card">
+        <h2 class="stat-label">Datasets</h2>
+        <p class="stat-value" id="stat-datasets" aria-live="polite">--</p>
+    </article>
+    <article class="stat-card">
+        <h2 class="stat-label">Experiments</h2>
+        <p class="stat-value" id="stat-experiments" aria-live="polite">--</p>
+    </article>
+    <article class="stat-card">
+        <h2 class="stat-label">Annotations</h2>
+        <p class="stat-value" id="stat-annotations" aria-live="polite">--</p>
+    </article>
+    <article class="stat-card">
+        <h2 class="stat-label">Prompts</h2>
+        <p class="stat-value" id="stat-prompts" aria-live="polite">--</p>
+    </article>
+</section>
+
+<section class="card" aria-labelledby="recent-heading">
+    <h2 id="recent-heading">Recent Experiments</h2>
+    <div class="table-wrapper">
+        <table class="table" id="recent-experiments" aria-label="Recent experiments">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Accuracy</th>
+                    <th scope="col">Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="4" class="empty-state">Loading experiments...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="card" aria-labelledby="leaderboard-preview-heading">
+    <h2 id="leaderboard-preview-heading">Leaderboard Top</h2>
+    <div class="table-wrapper">
+        <table class="table" id="leaderboard-preview" aria-label="Leaderboard top entries">
+            <thead>
+                <tr>
+                    <th scope="col">Rank</th>
+                    <th scope="col">Experiment</th>
+                    <th scope="col">Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3" class="empty-state">Loading leaderboard...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

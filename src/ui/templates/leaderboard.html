@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-header">
+    <h1>Leaderboard</h1>
+    <p class="subtitle">Compare experiment results and rankings</p>
+</section>
+
+<section class="card" aria-labelledby="leaderboard-heading">
+    <h2 id="leaderboard-heading">Rankings</h2>
+    <div class="table-wrapper">
+        <table class="table" id="leaderboard-table" aria-label="Leaderboard rankings">
+            <thead>
+                <tr>
+                    <th scope="col">Rank</th>
+                    <th scope="col">Experiment</th>
+                    <th scope="col">Score</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="4" class="empty-state">No submissions yet.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="card" aria-labelledby="submit-heading">
+    <h2 id="submit-heading">Submit to Leaderboard</h2>
+    <form class="form" id="submit-form" aria-label="Submit experiment to leaderboard">
+        <div class="form-group">
+            <label for="submit-exp-id">Experiment ID</label>
+            <input type="text" id="submit-exp-id" name="experiment_id" class="form-input" required placeholder="Enter experiment ID to submit" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" id="submit-btn">
+                <span class="btn-text">Submit</span>
+                <span class="btn-spinner" aria-hidden="true"></span>
+            </button>
+        </div>
+    </form>
+    <output id="submit-status" aria-live="polite"></output>
+</section>
+{% endblock %}

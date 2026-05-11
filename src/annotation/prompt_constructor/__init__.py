@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Callable
 from dataclasses import dataclass
 from common.types import Example, PromptTemplate, Chunk
 from common.config import get_settings
@@ -35,12 +35,11 @@ class PromptConstructor:
         if self.config.include_cot:
             parts.append(self._format_cot_scaffold(template.cot_scaffold))
 
-        if examples or retrieved_chunks:
-            parts.append(self._format_examples(
-                examples or [],
-                retrieved_chunks,
-                template.examples,
-            ))
+        parts.append(self._format_examples(
+            examples or [],
+            retrieved_chunks,
+            template.examples,
+        ))
 
         if self.config.include_schema:
             parts.append(self._format_output_schema(template.output_schema))
@@ -211,7 +210,7 @@ class PromptOptimizer:
         self,
         base_prompt: str,
         examples: list[dict[str, Any]],
-        metric_fn: callable,
+        metric_fn: Callable,
     ) -> str:
         variations = self._generate_variations(base_prompt)
 

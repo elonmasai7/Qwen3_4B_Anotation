@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Annotation Platform - Competition-grade Automatic Data Annotation">
+    <title>{{ title }} | Annotation Platform</title>
+    <link rel="stylesheet" href="/ui/static/css/style.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="header" role="banner">
+        <div class="header-inner">
+            <a href="/ui/" class="logo" aria-label="Annotation Platform Home">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                </svg>
+                <span class="logo-text">Annotation Platform</span>
+            </a>
+            <nav class="nav" aria-label="Main navigation" role="navigation">
+                <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Toggle navigation menu">
+                    <span class="nav-toggle-bar"></span>
+                    <span class="nav-toggle-bar"></span>
+                    <span class="nav-toggle-bar"></span>
+                </button>
+                <ul id="nav-list" class="nav-list">
+                    <li><a href="/ui/" class="nav-link {% if active == 'dashboard' %}active{% endif %}" aria-current="{% if active == 'dashboard' %}page{% endif %}">Dashboard</a></li>
+                    <li><a href="/ui/annotation" class="nav-link {% if active == 'annotation' %}active{% endif %}" aria-current="{% if active == 'annotation' %}page{% endif %}">Annotation</a></li>
+                    <li><a href="/ui/datasets" class="nav-link {% if active == 'datasets' %}active{% endif %}" aria-current="{% if active == 'datasets' %}page{% endif %}">Datasets</a></li>
+                    <li><a href="/ui/experiments" class="nav-link {% if active == 'experiments' %}active{% endif %}" aria-current="{% if active == 'experiments' %}page{% endif %}">Experiments</a></li>
+                    <li><a href="/ui/prompts" class="nav-link {% if active == 'prompts' %}active{% endif %}" aria-current="{% if active == 'prompts' %}page{% endif %}">Prompts</a></li>
+                    <li><a href="/ui/leaderboard" class="nav-link {% if active == 'leaderboard' %}active{% endif %}" aria-current="{% if active == 'leaderboard' %}page{% endif %}">Leaderboard</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content" class="main" role="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <div class="footer-inner">
+            <p>Annotation Platform v1.0.0 &mdash; Powered by Qwen3-4B</p>
+        </div>
+    </footer>
+
+    <script src="/ui/static/js/main.js"></script>
+</body>
+</html>
