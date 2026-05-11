@@ -9,7 +9,7 @@ settings = get_settings()
 
 
 class StorageClient:
-    def __init__(self):
+    def __init__(self) -> None:
         self._client: Minio | None = None
 
     def _get_client(self) -> Minio:

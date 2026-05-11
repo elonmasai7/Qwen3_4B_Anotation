@@ -178,7 +178,7 @@ class MetricsCalculator:
 
 
 class LatencyTracker:
-    def __init__(self):
+    def __init__(self) -> None:
         self.latencies: list[float] = []
         self.start_time: float | None = None
 
@@ -205,7 +205,7 @@ class LatencyTracker:
 
 
 class EvaluationEngine:
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_calc = MetricsCalculator()
         self.latency_tracker = LatencyTracker()
         self.total_cost = 0.0

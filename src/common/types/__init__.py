@@ -1,6 +1,6 @@
 from typing import Any, TypeAlias
 from pydantic import BaseModel, Field
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 import uuid
 
@@ -43,8 +43,8 @@ PromptId: TypeAlias = str
 ExperimentId: TypeAlias = str
 
 class Metadata(BaseModel):
-    created_at: datetime = Field(default_factory=datetime.utcnow)
-    updated_at: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     version: int = 1
     tags: list[str] = Field(default_factory=list)
     source: str | None = None
@@ -119,7 +119,7 @@ class ExperimentConfig(BaseModel):
     max_tokens: int = 2048
     num_branches: int = 3
     retrieval_method: str = "hybrid"
-    created_at: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class PromptTemplate(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -133,5 +133,5 @@ class PromptTemplate(BaseModel):
 class LeaderboardSubmission(BaseModel):
     experiment_id: str
     metrics: EvaluationMetrics
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     metadata: dict[str, Any] = Field(default_factory=dict)

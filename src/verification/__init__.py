@@ -10,7 +10,7 @@ logger = get_logger(__name__)
 
 
 class ConsistencyChecker:
-    def __init__(self, ontology: dict[str, Any] | None = None):
+    def __init__(self, ontology: dict[str, Any] | None = None) -> None:
         self.ontology = ontology or {}
 
     def verify(self, annotation: AnnotationResult, data: DataRow) -> VerificationResult:
@@ -100,7 +100,7 @@ class ConsistencyChecker:
 
 
 class AdversarialChecker:
-    def __init__(self):
+    def __init__(self) -> None:
         self.injection_patterns = [
             r"ignore\s+(previous|above|all)\s+(instructions?|prompts?|rules?)",
             r"system\s*:\s*",
@@ -181,7 +181,7 @@ class AdversarialChecker:
 
 
 class RepairEngine:
-    def __init__(self):
+    def __init__(self) -> None:
         self.consistency_checker = ConsistencyChecker()
         self.adversarial_checker = AdversarialChecker()
 
@@ -235,7 +235,7 @@ class RepairEngine:
 
 
 class QualityVerifier:
-    def __init__(self):
+    def __init__(self) -> None:
         self.consistency_checker = ConsistencyChecker()
         self.adversarial_checker = AdversarialChecker()
         self.repair_engine = RepairEngine()

@@ -29,7 +29,7 @@ class DataLoader(ABC):
     async def stream_load(
         self,
         batch_size: int = 100,
-        transform_fn: Callable[[dict], dict[str, Any]] | None = None,
+        transform_fn: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
     ) -> AsyncIterator[list[DataRow]]:
         batch: list[DataRow] = []
         async for row in self.load():

@@ -56,7 +56,7 @@ app.include_router(ui_router, prefix="/ui")
 
 
 @app.get("/")
-async def root():
+async def root() -> dict[str, str]:
     return {
         "name": "Annotation Platform",
         "version": "1.0.0",
@@ -65,7 +65,7 @@ async def root():
 
 
 @app.get("/docs")
-async def api_docs_redirect():
+async def api_docs_redirect() -> dict[str, str]:
     return {"message": "API docs at /api/v1/docs"}
 
 

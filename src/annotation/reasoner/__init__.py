@@ -14,7 +14,7 @@ settings = get_settings()
 
 
 class AnnotationReasoner:
-    def __init__(self, model_client: Any = None):
+    def __init__(self, model_client: Any = None) -> None:
         self.model_client = model_client
 
     async def reason(
@@ -103,7 +103,7 @@ class AnnotationReasoner:
 
 
 class MultiPassReasoner:
-    def __init__(self, reasoner: AnnotationReasoner):
+    def __init__(self, reasoner: AnnotationReasoner) -> None:
         self.reasoner = reasoner
         self.passes = ["draft", "self_critique", "repair", "confidence_calibration", "schema_validation"]
 
@@ -194,7 +194,7 @@ class SelfConsistencyEngine:
         self,
         reasoner: AnnotationReasoner,
         num_branches: int | None = None,
-    ):
+    ) -> None:
         self.reasoner = reasoner
         self.num_branches = num_branches or settings.annotation.num_branches
 

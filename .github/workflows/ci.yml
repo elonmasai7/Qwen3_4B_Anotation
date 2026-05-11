@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Lint with ruff
+        run: ruff check src/
+
+      - name: Test with pytest
+        run: |
+          PYTHONPATH=src pytest tests/ -v --tb=short
+
+      - name: Verify ingestion pipeline
+        run: |
+          PYTHONPATH=src python -c "
+          from ingestion.loaders import CSVLoader
+          from pathlib import Path
+          import asyncio
+          async def test():
+              loader = CSVLoader(Path('data/FINAL_DATASET.csv'))
+              assert await loader.validate()
+              rows = [r async for r in loader.load()]
+              print(f'Loaded {len(rows)} rows')
+          asyncio.run(test())
+          "

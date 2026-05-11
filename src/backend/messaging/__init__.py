@@ -9,7 +9,7 @@ settings = get_settings()
 
 
 class MessagePublisher:
-    def __init__(self):
+    def __init__(self) -> None:
         self._producer: AIOKafkaProducer | None = None
 
     async def connect(self) -> None:
@@ -45,7 +45,7 @@ class MessagePublisher:
 
 
 class MessageConsumer:
-    def __init__(self, topic: str, group_id: str | None = None):
+    def __init__(self, topic: str, group_id: str | None = None) -> None:
         self.topic = topic
         self.group_id = group_id or settings.kafka.consumer_group
         self._consumer: AIOKafkaConsumer | None = None
@@ -93,7 +93,7 @@ class MessageConsumer:
 
 
 class AnnotationTaskProducer:
-    def __init__(self):
+    def __init__(self) -> None:
         self.publisher = MessagePublisher()
 
     async def send_task(self, task: dict[str, Any]) -> bool:
@@ -101,7 +101,7 @@ class AnnotationTaskProducer:
 
 
 class AnnotationResultConsumer:
-    def __init__(self):
+    def __init__(self) -> None:
         self.consumer = MessageConsumer("annotation-results")
 
     async def start(self, handler: Callable[[dict[str, Any]], None]) -> None:

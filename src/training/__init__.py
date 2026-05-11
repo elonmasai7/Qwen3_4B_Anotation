@@ -10,7 +10,7 @@ logger = get_logger(__name__)
 
 
 class ActiveLearningEngine:
-    def __init__(self, uncertainty_threshold: float = 0.3):
+    def __init__(self, uncertainty_threshold: float = 0.3) -> None:
         self.uncertainty_threshold = uncertainty_threshold
 
     def select_uncertain_samples(
@@ -97,7 +97,7 @@ class ActiveLearningEngine:
 
 
 class SyntheticExampleGenerator:
-    def __init__(self, template: str = ""):
+    def __init__(self, template: str = "") -> None:
         self.template = template
 
     def generate(
@@ -179,7 +179,7 @@ class SyntheticExampleGenerator:
 
 
 class PromptEvolutionEngine:
-    def __init__(self):
+    def __init__(self) -> None:
         self.population: list[dict[str, Any]] = []
         self.generation = 0
 
@@ -268,7 +268,7 @@ class PromptEvolutionEngine:
 
 
 class GeneticPromptSearch:
-    def __init__(self):
+    def __init__(self) -> None:
         self.engine = PromptEvolutionEngine()
 
     def search(

@@ -19,7 +19,7 @@ class GenerationConfig:
 
 
 class VLLMEngine:
-    def __init__(self):
+    def __init__(self) -> None:
         self._client = None
         self._initialized = False
 
@@ -160,7 +160,7 @@ class QuantizationManager:
 
 
 class SpeculativeDecoding:
-    def __init__(self, engine: VLLMEngine):
+    def __init__(self, engine: VLLMEngine) -> None:
         self.engine = engine
         self.draft_model = None
 
@@ -180,7 +180,7 @@ class SpeculativeDecoding:
 
 
 class KVCacheOptimizer:
-    def __init__(self):
+    def __init__(self) -> None:
         self.cache = {}
         self.max_cache_size = 1000
 
@@ -198,7 +198,7 @@ class KVCacheOptimizer:
 
 
 class AsyncBatcher:
-    def __init__(self, max_batch_size: int = 16, timeout: float = 0.1):
+    def __init__(self, max_batch_size: int = 16, timeout: float = 0.1) -> None:
         self.max_batch_size = max_batch_size
         self.timeout = timeout
         self.pending: list[tuple[asyncio.Future, str]] = []
@@ -241,7 +241,7 @@ class AsyncBatcher:
 
 
 class GPUManager:
-    def __init__(self):
+    def __init__(self) -> None:
         self.available_gpus: list[int] = []
         self.gpu_loads: dict[int, float] = {}
 
