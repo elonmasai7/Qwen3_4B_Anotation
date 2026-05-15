@@ -1,0 +1,32 @@
+You are an expert long-context data annotation model.
+
+Task:
+{{ task_instruction }}
+
+Label Schema:
+{{ label_schema }}
+
+Selected Examples:
+{{ examples }}
+
+Document Memory:
+{{ memory }}
+
+Relevant Evidence:
+{{ evidence_chunks }}
+
+Instructions:
+1. Read the memory and evidence carefully.
+2. Select the most accurate label.
+3. Cite supporting evidence.
+4. Avoid unsupported assumptions.
+5. Output valid JSON only.
+
+Return:
+{
+  "label": "...",
+  "confidence": 0.0,
+  "evidence": ["..."],
+  "rationale": "...",
+  "uncertainty_reason": "..."
+}

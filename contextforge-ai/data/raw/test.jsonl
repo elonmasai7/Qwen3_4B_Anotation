@@ -1,0 +1,2 @@
+{"id":"sample_001","input_text":"The review states the product is excellent, reliable, and very useful.","task_instruction":"Classify sentiment","label_options":["positive","negative","neutral"]}
+{"id":"sample_002","input_text":"The report highlights severe delays, poor quality, and multiple failures.","task_instruction":"Classify sentiment","label_options":["positive","negative","neutral"]}

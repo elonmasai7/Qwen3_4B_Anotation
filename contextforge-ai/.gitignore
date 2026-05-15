@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+
+contextforge.db
+
+data/processed/faiss/
+data/predictions/*.jsonl
+data/reports/evaluation_report.json
+data/reports/evaluation_report.md
+
+experiments/results/*.json
+experiments/results/*.jsonl
+submission/

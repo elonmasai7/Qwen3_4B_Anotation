@@ -1,0 +1,19 @@
+variants:
+  - model: Qwen3-4B
+    retrieval_method: hybrid
+    chunk_size: 2048
+    overlap: 256
+    examples: 6
+    temperature: 0.1
+  - model: Qwen3-4B
+    retrieval_method: bm25
+    chunk_size: 1536
+    overlap: 192
+    examples: 5
+    temperature: 0.2
+  - model: Qwen3-4B
+    retrieval_method: vector
+    chunk_size: 2560
+    overlap: 256
+    examples: 8
+    temperature: 0.05

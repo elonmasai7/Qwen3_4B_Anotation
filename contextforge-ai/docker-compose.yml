@@ -1,0 +1,54 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: contextforge-postgres
+    environment:
+      POSTGRES_DB: contextforge
+      POSTGRES_USER: contextforge
+      POSTGRES_PASSWORD: contextforge
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  contextforge-api:
+    build: .
+    container_name: contextforge-api
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=${DATABASE_URL:-sqlite:///./contextforge.db}
+      - USE_VLLM=false
+      - RETRIEVAL_BACKEND=${RETRIEVAL_BACKEND:-faiss}
+      - QUEUE_BACKEND=sqlite
+    volumes:
+      - ./:/workspace/contextforge-ai
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+  contextforge-worker:
+    build: .
+    container_name: contextforge-worker
+    depends_on:
+      - contextforge-api
+    environment:
+      - DATABASE_URL=${DATABASE_URL:-sqlite:///./contextforge.db}
+      - RETRIEVAL_BACKEND=${RETRIEVAL_BACKEND:-faiss}
+      - QUEUE_BACKEND=sqlite
+      - QUEUE_POLL_INTERVAL_S=0.2
+    volumes:
+      - ./:/workspace/contextforge-ai
+    command: python scripts/run_worker.py
+
+  contextforge-dashboard:
+    build: .
+    container_name: contextforge-dashboard
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./:/workspace/contextforge-ai
+    command: streamlit run dashboard/streamlit_app.py --server.port=8501 --server.address=0.0.0.0
+
+volumes:
+  pgdata:
